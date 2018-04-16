@@ -1,0 +1,12 @@
+FROM hypriot/rpi-alpine-scratch
+WORKDIR /cloudflared
+RUN apk update && \
+    apk upgrade && \
+    apk add wget bash ca-certificates && \
+    rm -rf /var/cache/apk/*
+
+RUN wget https://bin.equinox.io/c/VdrWdbjqyF/cloudflared-stable-linux-arm.tgz && \
+    tar -xvzf cloudflared-stable-linux-arm.tgz && \
+    rm cloudflared-stable-linux-arm.tgz
+
+CMD ["./cloudflared", "proxy-dns", "--port", "54" ,"--upstream", "https://1.1.1.1/.well-known/dns-query", "--upstream", "https://1.0.0.1/.well-known/dns-query"]
