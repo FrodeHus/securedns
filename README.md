@@ -20,4 +20,3 @@ This will deploy:
 - Ingress (configured for Traefik with Let's Encrypt certificates)
   - configured to use basic authentication (default: `admin/admin` (again, MIGHT want to change this))
 
-__TODO__: expose the deployment on port 53 (random NodePort right now)- avoided using _hostNetwork_ as this would give the container root access to the cluster (PiHole requires root user unless I'm missing something - let me know!)
