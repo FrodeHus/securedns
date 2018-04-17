@@ -1,4 +1,5 @@
 # Secure DNS-over-HTTPS for Kubernetes
+[Blog post](https://pepperprovesapoint.com/index.php/2018/04/17/secure-dns-over-https-for-kubernetes/)
 
 Based on [this awesome blog by Scott Helme](https://scotthelme.co.uk/securing-dns-across-all-of-my-devices-with-pihole-dns-over-https-1-1-1-1/) I figured it would be cool to translate this into a Kubernetes deployment since Raspberry Pi Kubernetes clusters are now a big thing for the container enthusiast.
 
