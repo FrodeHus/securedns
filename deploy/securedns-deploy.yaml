@@ -42,6 +42,8 @@ spec:
               - containerPort: 80
                 protocol: TCP
               volumeMounts:
+              - name: state
+                mountPath: /etc/pihole
               - name: securedns-config
                 mountPath: /etc/dnsmasq.d/01-pihole.conf
                 subPath: 01-pihole.conf
@@ -59,9 +61,26 @@ spec:
               - name: TUNNEL_METRICS
                 value: "$(POD_IP):9100"
             volumes:
+            - name: state
+              persistentVolumeClaim:
+                claimName: securedns-state
             - name: securedns-config
               configMap:
                 name: securedns-conf
             restartPolicy: Always
 #            nodeSelector:
 #              feature: dns
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+    name: securedns-state
+    namespace: default
+    labels:
+        k8s-app: securedns
+spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+        requests:
+            storage: 1Gi
