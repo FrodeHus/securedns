@@ -50,6 +50,16 @@ spec:
               - name: securedns-config
                 mountPath: /etc/lighttpd/external.conf
                 subPath: external.conf
+              livenessProbe:
+                tcpSocket:
+                  port: 53
+                initialDelaySeconds: 60
+                periodSeconds: 30
+              readinessProbe:
+                tcpSocket:
+                  port: 53
+                initialDelaySeconds: 30
+                periodSeconds: 10
             - name: cloudflared
               image: frodehus/cloudflared:v1
               imagePullPolicy: Always
@@ -60,6 +70,18 @@ spec:
                         fieldPath: status.podIP
               - name: TUNNEL_METRICS
                 value: "$(POD_IP):9100"
+              livenessProbe:
+                httpGet:
+                  path: /metrics
+                  port: 9100
+                initialDelaySeconds: 60
+                periodSeconds: 30
+              readinessProbe:
+                httpGet:
+                  path: /metrics
+                  port: 9100
+                initialDelaySeconds: 15
+                periodSeconds: 5
             volumes:
             - name: state
               persistentVolumeClaim:
